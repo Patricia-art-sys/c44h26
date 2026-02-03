@@ -88,7 +88,8 @@ public class MainActivity extends AppCompatActivity {
                 montantTransfert = parseInt(transfert);
                 if(!email.isEmpty()){
                     if(solde < montantTransfert){
-                        champMail.setText("Montant indisponible");
+                        champMail.setText("");
+                        champMail.setHint("Montant indisponible");
                         champTransfert.setText("");
                     }else{
                         champMail.setText("Transfert réussi!");
