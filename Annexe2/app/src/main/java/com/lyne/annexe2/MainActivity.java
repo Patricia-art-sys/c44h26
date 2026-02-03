@@ -1,5 +1,7 @@
 package com.lyne.annexe2;
 
+import static java.lang.Integer.parseInt;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -20,11 +22,15 @@ public class MainActivity extends AppCompatActivity {
 
     Ecouteur ec;
     Button boutonValider;
+    Button boutonEnvoyer;
     EditText champNomCompte;
+    EditText champMail;
+    EditText champTransfert;
     TextView champSolde;
     ArrayList<String> choix;
 
     int solde;
+    int montantTransfert;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +44,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         boutonValider = findViewById(R.id.boutonValider);
+        boutonEnvoyer = findViewById(R.id.boutonEnvoyer);
         champNomCompte = findViewById(R.id.compteChoisi);
+        champMail = findViewById(R.id.mailAdress);
+        champTransfert = findViewById(R.id.transfert);
         champSolde = findViewById(R.id.solde);
 
         choix = new ArrayList<>();
@@ -50,22 +59,48 @@ public class MainActivity extends AppCompatActivity {
         ec = new Ecouteur();
         // étape 2
         boutonValider.setOnClickListener(ec);
+        boutonEnvoyer.setOnClickListener(ec);
     }
 
     //étape 3
 
     private class Ecouteur implements View.OnClickListener{
-
         @Override
-        public void onClick(View v) {
-            //quand on clic on est ici
-            String nomCompte = champNomCompte.getText().toString();
-            //trim retire les espaces au début et à la fin
-            nomCompte = nomCompte.trim().toUpperCase();
-            if(choix.contains(nomCompte)){
-                solde = 500;
-                champSolde.setText(String.valueOf(solde));
+        public void onClick(View source) {
+            if(source ==boutonValider){
+                //quand on clic on est ici
+                String nomCompte = champNomCompte.getText().toString();
+                //trim retire les espaces au début et à la fin
+                nomCompte = nomCompte.trim().toUpperCase();
+                if(choix.contains(nomCompte)){
+                    solde = 500;
+                    champSolde.setText(String.valueOf(solde));
+                }
+                else{
+                    champSolde.setText("Compte Inexistant");
+                    champNomCompte.setText(" ");
+                }
             }
+            //boutonEnvoyer
+            else{
+                String email = champMail.getText().toString();
+                String transfert = champTransfert.getText().toString();
+                montantTransfert = parseInt(transfert);
+                if(!email.isEmpty()){
+                    if(solde < montantTransfert){
+                        champMail.setText("Montant indisponible");
+                        champTransfert.setText("");
+                    }else{
+                        champMail.setText("Transfert réussi!");
+                        solde -= montantTransfert;
+                        champSolde.setText(String.valueOf(solde));
+                    }
+                }else{
+
+                }
+
+            }
+
         }
     }
 }
