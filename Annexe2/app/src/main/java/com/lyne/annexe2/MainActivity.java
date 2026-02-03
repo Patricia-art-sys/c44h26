@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
     private class Ecouteur implements View.OnClickListener{
         @Override
         public void onClick(View source) {
-            if(source ==boutonValider){
+            if(source == boutonValider){
                 //quand on clic on est ici
                 String nomCompte = champNomCompte.getText().toString();
                 //trim retire les espaces au début et à la fin
