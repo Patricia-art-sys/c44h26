@@ -1,9 +1,10 @@
 package com.lyne.annexe3;
 
-import android.annotation.SuppressLint;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -16,15 +17,15 @@ import androidx.core.view.WindowInsetsCompat;
 public class MainActivity extends AppCompatActivity {
 
     Ecouteur ec;
-    Button boutonBidon;
-    Button boutonBouteille;
-    Button boutonVerre;
+    ImageButton onBidon;
+    ImageButton onGourde;
+    ImageButton onVerre;
     TextView litre;
     ProgressBar barre;
     int eau;
 
 
-    @SuppressLint({"WrongViewCast", "MissingInflatedId"})
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,35 +36,40 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        boutonBidon = findViewById(R.id.boutonBidon);
-        boutonBouteille = findViewById(R.id.boutonBouteille);
-        boutonVerre = findViewById(R.id.boutonVerre);
+
+        onBidon = findViewById(R.id.boutonBidon);
+        onGourde = findViewById(R.id.boutonBouteille);
+        onVerre = findViewById(R.id.boutonVerre);
         litre = findViewById(R.id.litre);
         barre = findViewById(R.id.progressBar);
 
         ec = new Ecouteur();
 
-        boutonBidon.setOnClickListener(ec);
-        boutonBouteille.setOnClickListener(ec);
-        boutonVerre.setOnClickListener(ec);
+        onBidon.setOnClickListener(ec);
+        onGourde.setOnClickListener(ec);
+        onVerre.setOnClickListener(ec);
 
     }
 
     private class Ecouteur implements View.OnClickListener{
         @Override
         public void onClick(View source){
-            if(source == boutonBidon){
+
+            if(source == onBidon){
                 eau += 1500;
                 litre.setText(String.valueOf(eau));
                 barre.setProgress(eau);
-            }else if(source == boutonBouteille){
+
+            }else if(source == onGourde){
                 eau += 330;
                 litre.setText(String.valueOf(eau));
                 barre.setProgress(eau);
+
             }else{
                 eau += 150;
                 litre.setText(String.valueOf(eau));
                 barre.setProgress(eau);
+
             }
 
         }
