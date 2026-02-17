@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     private class Ecouteur implements View.OnClickListener{
         @Override
         public void onClick(View source) {
-            motDePasse1 =""; 
+            motDePasse1 ="";
             if(motDePasse1.length() < 4) {
                 motDePasse1 += ((Button) source).getText();
                 password.setText(motDePasse1);
