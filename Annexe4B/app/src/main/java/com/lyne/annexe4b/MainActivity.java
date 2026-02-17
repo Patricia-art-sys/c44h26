@@ -46,13 +46,16 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }
+            else if(main.getChildAt(i) instanceof Button){
+                main.getChildAt(i).setOnClickListener(ec);
+            }
         }
 
     }
     private class Ecouteur implements View.OnClickListener{
         @Override
         public void onClick(View source) {
-            motDePasse1 ="";
+
             if(motDePasse1.length() < 4) {
                 motDePasse1 += ((Button) source).getText();
                 password.setText(motDePasse1);
@@ -61,10 +64,11 @@ public class MainActivity extends AppCompatActivity {
                         main.setBackgroundColor(Color.GREEN);
                     } else {
                         main.setBackgroundColor(Color.RED);
+                        motDePasse1 = "";
+                        password.setText(motDePasse1);
                     }
                 }
             }
-
 
         }
     }
