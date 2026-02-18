@@ -4,9 +4,9 @@ public class Exercice {
     private int minutes;
     private String type;
 
-    public Exercice(int minutes, String type) {
+    public Exercice(int minutes) {
         this.minutes = minutes;
-        this.type = type;
+        setType(type);
     }
 
     public int getMinutes() {
@@ -15,5 +15,13 @@ public class Exercice {
 
     public String getType() {
         return type;
+    }
+
+    public void setMinutes(int minutes) {
+        this.minutes = minutes;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

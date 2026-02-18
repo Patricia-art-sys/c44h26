@@ -31,6 +31,11 @@ public class PlanEnterainement {
     }
 
     public boolean objectifAtteint(){
-        return true;
+        for(int i=0; i <list.size(); i++){
+            if(list.get(i).getMinutes() == getObjectif()){
+                return true;
+            }
+        }
+        return false;
     }
 }
