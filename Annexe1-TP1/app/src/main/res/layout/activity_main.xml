@@ -31,8 +31,8 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:inputType="number"
-            android:text="TextView" />
+            android:hint="valeurx"
+            android:inputType="number" />
 
         <TextView
             android:id="@+id/texteY"
@@ -41,8 +41,8 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:inputType="number"
-            android:text="TextView" />
+            android:hint="valeury"
+            android:inputType="number" />
 
         <Button
             android:id="@+id/button"
@@ -51,6 +51,6 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:text="Button" />
+            android:text="Entrée" />
     </LinearLayout>
 </LinearLayout>
