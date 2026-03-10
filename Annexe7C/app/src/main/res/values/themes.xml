@@ -1,0 +1,25 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.Annexe7C" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <item name="colorPrimary">@color/couleurFond</item>
+        <item name="colorSecondary">@color/couleurInventee</item>
+
+        <item name="colorOnPrimary">@color/couleurTulavu</item>
+
+        <item name="strokeWidth">5dp</item>
+        <item name="strokeColor">@color/couleurInventee</item>
+
+        <item name="android:textViewStyle">@style/monStyle</item>
+
+
+    </style>
+
+    <style name="monStyle" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textColor">@color/couleurTulavu</item>
+        <item name="android:textAllCaps">true</item>
+
+    </style>
+
+    <style name="Theme.Annexe7C" parent="Base.Theme.Annexe7C" />
+</resources>
