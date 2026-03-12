@@ -1,8 +1,15 @@
 package com.LYNE.tp1;
 
-public class Cercle extends Details{
+import android.graphics.Canvas;
+
+public class Cercle extends Forme {
     private int rayon;
-    public Cercle(int largeur, Colors color) {
+    public Cercle(int largeur, int color) {
         super(largeur, color);
+    }
+
+    @Override
+    public void dessiner(Canvas c) {
+
     }
 }
