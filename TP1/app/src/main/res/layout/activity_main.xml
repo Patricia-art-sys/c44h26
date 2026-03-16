@@ -151,6 +151,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:tag="crayon"
                 app:srcCompat="@drawable/crayon" />
 
             <ImageButton
@@ -158,6 +159,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:tag="efface"
                 app:srcCompat="@drawable/efface" />
 
             <ImageButton
@@ -165,6 +167,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:tag="cercle"
                 app:srcCompat="@drawable/cercle" />
 
             <ImageButton
@@ -172,6 +175,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:tag="triangle"
                 app:srcCompat="@drawable/triangle" />
 
             <ImageButton
@@ -179,6 +183,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:tag="rectangle"
                 app:srcCompat="@drawable/rectangle" />
 
             <ImageButton
@@ -186,6 +191,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:tag="largeurTrait"
                 app:srcCompat="@drawable/largeur_trait" />
 
             <ImageButton
@@ -193,6 +199,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:tag="pipette"
                 app:srcCompat="@drawable/pipette" />
 
             <ImageButton
@@ -200,6 +207,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:tag="remplissage"
                 app:srcCompat="@drawable/remplir" />
 
             <ImageButton
@@ -207,6 +215,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:tag="undo"
                 app:srcCompat="@drawable/undo" />
 
             <ImageButton
@@ -214,6 +223,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:tag="redo"
                 app:srcCompat="@drawable/redo" />
 
             <ImageButton
@@ -221,6 +231,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:tag="enregistrer"
                 app:srcCompat="@drawable/enregistrer" />
         </LinearLayout>
     </HorizontalScrollView>

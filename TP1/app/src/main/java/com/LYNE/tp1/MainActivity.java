@@ -4,6 +4,7 @@ import static android.view.MotionEvent.ACTION_MOVE;
 import static android.view.MotionEvent.ACTION_UP;
 
 import static java.lang.Integer.parseInt;
+import static java.lang.Integer.parseUnsignedInt;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -37,6 +38,12 @@ public class MainActivity extends AppCompatActivity {
     Point depart, arrivee;
     int color;
     int largeur = 10;
+    int couleurFond;
+    String control;
+
+    public int getCouleurFond() {
+        return couleurFond;
+    }
 
     Forme tracer;
     TraceLibre t;
@@ -77,13 +84,15 @@ public class MainActivity extends AppCompatActivity {
         s.setOnTouchListener(ec);
 
         parent.addView(s);
+
     }
 
     private class Surface extends View {
 
         public Surface(Context context) {
             super(context);
-
+            couleurFond = Color.parseColor("#FAF0E6");
+            this.setBackgroundColor(couleurFond);
         }
 
         @Override
@@ -93,10 +102,11 @@ public class MainActivity extends AppCompatActivity {
                 tracer.dessiner(canvas);
 
             if(listDeForme != null){
-                for(Forme f : listDeForme){
+                for(Forme f : listDeForme)
                     f.dessiner(canvas);
-                }
             }
+
+
         }
     }
     private class Ecouteur implements View.OnClickListener, View.OnTouchListener{
@@ -108,8 +118,9 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("couleur");
                 color = Color.parseColor(String.valueOf(source.getTag()));
 
-                System.out.println(color);
 
+            }else if(source instanceof ImageButton){
+                control = (String) source.getTag();
             }
 
         }
@@ -118,15 +129,49 @@ public class MainActivity extends AppCompatActivity {
         public boolean onTouch(View v, MotionEvent event) {
             if(event.getAction() == MotionEvent.ACTION_DOWN){
                 depart = new Point((int)event.getX(), (int)event.getY());
-                t = new TraceLibre(largeur, color);
-                if(tracer instanceof TraceLibre){
-                    t.addPointsMove(depart);
+
+                if(control.equals("crayon")){
+                    tracer = new TraceLibre(largeur, color);
+                }else if(control.equals("cercle")){
+                    tracer = new Cercle(largeur, color);
+
+                }else if(control.equals("efface")){
+                    tracer = new Efface(largeur, couleurFond);
+
+                }else if(control.equals("triangle")){
+                    tracer = new Triangle(largeur, color);
+
+                }else if(control.equals("rectangle")){
+                    tracer = new Rectangle(largeur, color);
+                }
+
+                if(tracer instanceof TraceLibre) {
+                    ((TraceLibre) tracer).addPointsMove(depart);
+
+                }else if(tracer instanceof Cercle){
+                     ((Cercle) tracer).setDepart(depart);
+
+                }else if(tracer instanceof Rectangle){
+                    ((Rectangle) tracer).setDepart(depart);
+
+                }else if(tracer instanceof Efface){
+                    ((Efface) tracer).addPointsMove(depart);
                 }
 
             }else if(event.getAction() == ACTION_MOVE){
                 arrivee = new Point((int)event.getX(), (int)event.getY());
-                if(tracer instanceof TraceLibre){
-                    t.addPointsLine(arrivee);
+
+                if(tracer instanceof TraceLibre)
+                    ((TraceLibre)tracer).addPointsLine(arrivee);
+
+                else if(tracer instanceof Cercle){
+                    ((Cercle) tracer).setArrivee(arrivee);
+
+                }else if(tracer instanceof Rectangle){
+                    ((Rectangle) tracer).setArrivee(arrivee);
+
+                }else if(tracer instanceof Efface){
+                    ((Efface) tracer).addPointsLine(arrivee);
                 }
                 s.invalidate();
 
@@ -135,7 +180,6 @@ public class MainActivity extends AppCompatActivity {
                 depart = null;
                 arrivee = null;
             }
-
             return true;
         }
     }

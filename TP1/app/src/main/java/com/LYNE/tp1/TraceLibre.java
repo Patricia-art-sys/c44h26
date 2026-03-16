@@ -12,10 +12,6 @@ public class TraceLibre extends Forme {
         p = new Path();
     }
 
-    public Path getP() {
-        return p;
-    }
-
     @Override
     public void dessiner(Canvas c) {
         Paint crayon;
