@@ -136,14 +136,15 @@ public class MainActivity extends AppCompatActivity {
                     tracer = new Cercle(largeur, color);
 
                 }else if(control.equals("efface")){
-                    tracer = new Efface(largeur, couleurFond);
+                    tracer = new Efface(largeur+10, couleurFond);
 
                 }else if(control.equals("triangle")){
                     tracer = new Triangle(largeur, color);
 
                 }else if(control.equals("rectangle")){
                     tracer = new Rectangle(largeur, color);
-                }
+
+                }else if()
 
                 if(tracer instanceof TraceLibre) {
                     ((TraceLibre) tracer).addPointsMove(depart);
