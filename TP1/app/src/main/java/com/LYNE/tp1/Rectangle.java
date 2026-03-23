@@ -6,11 +6,10 @@ import android.graphics.Path;
 import android.graphics.Point;
 
 public class Rectangle extends Forme {
-    private Path p;
+
     private Point depart, arrivee;
     public Rectangle(int largeur, int color) {
         super(largeur, color);
-        p = new Path();
     }
 
     @Override

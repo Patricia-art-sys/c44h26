@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
@@ -46,8 +47,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     Forme tracer;
-    TraceLibre t;
+    ArrayList<Forme>  temp;
     ArrayList<Forme> listDeForme;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
         outils = findViewById(R.id.outils);
         parent = findViewById(R.id.parent);
         listDeForme = new ArrayList<>();
+        temp = new ArrayList<>();
 
         ec = new Ecouteur();
         s = new Surface(this);
@@ -98,12 +101,14 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onDraw(@NonNull Canvas canvas) {
             super.onDraw(canvas);
+
             if(tracer != null)
                 tracer.dessiner(canvas);
 
             if(listDeForme != null){
-                for(Forme f : listDeForme)
+                for(Forme f : listDeForme){
                     f.dessiner(canvas);
+                }
             }
 
 
@@ -118,9 +123,26 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("couleur");
                 color = Color.parseColor(String.valueOf(source.getTag()));
 
-
             }else if(source instanceof ImageButton){
                 control = (String) source.getTag();
+                if(control.equals("remplissage")){
+                    couleurFond = color;
+                    s.setBackgroundColor(couleurFond);
+
+                }else if(control.equals("undo")){
+                    if(listDeForme != null){
+                       Forme last = listDeForme.remove(listDeForme.size()-1);
+                       temp.add(last);
+                       s.invalidate();
+                       tracer = null;
+                    }
+                }else if(control.equals("redo")){
+                    if(temp != null){
+                        Forme redo = temp.remove(temp.size()-1);
+                        listDeForme.add(redo);
+                        s.invalidate();
+                    }
+                }
             }
 
         }
@@ -132,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if(control.equals("crayon")){
                     tracer = new TraceLibre(largeur, color);
+
                 }else if(control.equals("cercle")){
                     tracer = new Cercle(largeur, color);
 
@@ -144,7 +167,26 @@ public class MainActivity extends AppCompatActivity {
                 }else if(control.equals("rectangle")){
                     tracer = new Rectangle(largeur, color);
 
-                }else if()
+                }else if(control.equals("largeurTrait")){
+//
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+//                    builder.setTitle("Choisir la largeur");
+//
+//                    // créer une seekbar
+//                    final android.widget.SeekBar seekBar = new android.widget.SeekBar(MainActivity.this);
+//                    seekBar.setMax(100);
+//                    seekBar.setProgress(largeur);
+//
+//                    builder.setView(seekBar);
+//
+//                    builder.setPositiveButton("OK", (dialog, which) -> {
+//                        largeur = seekBar.getProgress();
+//                    });
+//
+//                    builder.setNegativeButton("Annuler", null);
+//
+//                    builder.show();
+                }
 
                 if(tracer instanceof TraceLibre) {
                     ((TraceLibre) tracer).addPointsMove(depart);
@@ -162,9 +204,9 @@ public class MainActivity extends AppCompatActivity {
             }else if(event.getAction() == ACTION_MOVE){
                 arrivee = new Point((int)event.getX(), (int)event.getY());
 
-                if(tracer instanceof TraceLibre)
-                    ((TraceLibre)tracer).addPointsLine(arrivee);
-
+                if(tracer instanceof TraceLibre) {
+                    ((TraceLibre) tracer).addPointsLine(arrivee);
+                }
                 else if(tracer instanceof Cercle){
                     ((Cercle) tracer).setArrivee(arrivee);
 
@@ -174,12 +216,14 @@ public class MainActivity extends AppCompatActivity {
                 }else if(tracer instanceof Efface){
                     ((Efface) tracer).addPointsLine(arrivee);
                 }
+
                 s.invalidate();
 
             }else if(event.getAction() == ACTION_UP){
                 listDeForme.add(tracer);
                 depart = null;
                 arrivee = null;
+                tracer = null;
             }
             return true;
         }
