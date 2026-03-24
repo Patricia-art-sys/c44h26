@@ -7,6 +7,7 @@ import static java.lang.Integer.parseInt;
 import static java.lang.Integer.parseUnsignedInt;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -37,19 +38,21 @@ public class MainActivity extends AppCompatActivity {
     Ecouteur ec;
     Surface s;
     Point depart, arrivee;
+    DialogLargeurTrait dialog;
     int color;
     int largeur = 10;
     int couleurFond;
     String control;
+    Bitmap bitmap;
 
     public int getCouleurFond() {
         return couleurFond;
     }
+    public void changerLargeur(int l){ this.largeur = l;}
 
     Forme tracer;
     ArrayList<Forme>  temp;
     ArrayList<Forme> listDeForme;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         parent = findViewById(R.id.parent);
         listDeForme = new ArrayList<>();
         temp = new ArrayList<>();
+        dialog = new DialogLargeurTrait(this);
 
         ec = new Ecouteur();
         s = new Surface(this);
@@ -85,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         s.setOnTouchListener(ec);
-
         parent.addView(s);
 
     }
@@ -97,6 +100,12 @@ public class MainActivity extends AppCompatActivity {
             couleurFond = Color.parseColor("#FAF0E6");
             this.setBackgroundColor(couleurFond);
         }
+        public Bitmap getBitmapImage(){
+            this.buildDrawingCache();
+            bitmap = Bitmap.createBitmap(this.getDrawingCache());
+            this.destroyDrawingCache();
+            return bitmap;
+        }
 
         @Override
         protected void onDraw(@NonNull Canvas canvas) {
@@ -107,15 +116,17 @@ public class MainActivity extends AppCompatActivity {
 
             if(listDeForme != null){
                 for(Forme f : listDeForme){
-                    f.dessiner(canvas);
+                    if(f instanceof Efface){
+                        f.setColor(couleurFond);
+                        f.dessiner(canvas);
+                    }else
+                        f.dessiner(canvas);
                 }
             }
-
-
         }
     }
     private class Ecouteur implements View.OnClickListener, View.OnTouchListener{
-
+        Bitmap img;
         @Override
         public void onClick(View source) {
 
@@ -142,9 +153,11 @@ public class MainActivity extends AppCompatActivity {
                         listDeForme.add(redo);
                         s.invalidate();
                     }
+                }else if(control.equals("largeurTrait")){
+                    dialog.show();
+
                 }
             }
-
         }
 
         @Override
@@ -159,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
                     tracer = new Cercle(largeur, color);
 
                 }else if(control.equals("efface")){
-                    tracer = new Efface(largeur+10, couleurFond);
+                    tracer = new TraceLibre(largeur+10, couleurFond);
 
                 }else if(control.equals("triangle")){
                     tracer = new Triangle(largeur, color);
@@ -167,25 +180,13 @@ public class MainActivity extends AppCompatActivity {
                 }else if(control.equals("rectangle")){
                     tracer = new Rectangle(largeur, color);
 
-                }else if(control.equals("largeurTrait")){
-//
-//                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-//                    builder.setTitle("Choisir la largeur");
-//
-//                    // créer une seekbar
-//                    final android.widget.SeekBar seekBar = new android.widget.SeekBar(MainActivity.this);
-//                    seekBar.setMax(100);
-//                    seekBar.setProgress(largeur);
-//
-//                    builder.setView(seekBar);
-//
-//                    builder.setPositiveButton("OK", (dialog, which) -> {
-//                        largeur = seekBar.getProgress();
-//                    });
-//
-//                    builder.setNegativeButton("Annuler", null);
-//
-//                    builder.show();
+                }else if(control.equals("pipette")){
+                    img = s.getBitmapImage();
+                    int couleurChoisie = img.getPixel(depart.x, depart.y);
+                    color = couleurChoisie;
+
+                    control = "crayon";
+                    tracer = new TraceLibre(largeur, color);
                 }
 
                 if(tracer instanceof TraceLibre) {
