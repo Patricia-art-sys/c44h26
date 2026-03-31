@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     DialogLargeurTrait dialog;
     int color;
     int largeur = 10;
-    int couleurFond;
+    int couleurFond = Color.parseColor("#FAF0E6");
     String control;
     Bitmap bitmap;
 
@@ -97,8 +97,6 @@ public class MainActivity extends AppCompatActivity {
 
         public Surface(Context context) {
             super(context);
-            couleurFond = Color.parseColor("#FAF0E6");
-            this.setBackgroundColor(couleurFond);
         }
         public Bitmap getBitmapImage(){
             this.buildDrawingCache();
@@ -115,12 +113,12 @@ public class MainActivity extends AppCompatActivity {
                 tracer.dessiner(canvas);
 
             if(listDeForme != null){
+                System.out.println(listDeForme.size());
                 for(Forme f : listDeForme){
-                    if(f instanceof Efface){
+                    if(f instanceof Efface) {
                         f.setColor(couleurFond);
-                        f.dessiner(canvas);
-                    }else
-                        f.dessiner(canvas);
+                    }
+                    f.dessiner(canvas);
                 }
             }
         }
@@ -131,7 +129,6 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View source) {
 
             if(source instanceof Button){
-                System.out.println("couleur");
                 color = Color.parseColor(String.valueOf(source.getTag()));
 
             }else if(source instanceof ImageButton){
@@ -155,7 +152,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }else if(control.equals("largeurTrait")){
                     dialog.show();
-
                 }
             }
         }
@@ -172,7 +168,8 @@ public class MainActivity extends AppCompatActivity {
                     tracer = new Cercle(largeur, color);
 
                 }else if(control.equals("efface")){
-                    tracer = new TraceLibre(largeur+10, couleurFond);
+
+                    tracer = new Efface(largeur+10, couleurFond);
 
                 }else if(control.equals("triangle")){
                     tracer = new Triangle(largeur, color);
@@ -200,6 +197,11 @@ public class MainActivity extends AppCompatActivity {
 
                 }else if(tracer instanceof Efface){
                     ((Efface) tracer).addPointsMove(depart);
+
+                }else if(tracer instanceof Triangle){
+                    ((Triangle) tracer).setStart(depart);
+                    ((Triangle) tracer).setEnd(depart);
+
                 }
 
             }else if(event.getAction() == ACTION_MOVE){
@@ -216,6 +218,9 @@ public class MainActivity extends AppCompatActivity {
 
                 }else if(tracer instanceof Efface){
                     ((Efface) tracer).addPointsLine(arrivee);
+
+                }else if(tracer instanceof Triangle){
+                    ((Triangle) tracer).setEnd(arrivee);
                 }
 
                 s.invalidate();
