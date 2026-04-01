@@ -103,7 +103,10 @@ public class MainActivity extends AppCompatActivity {
                             .show();
                 }
             }else{
-
+                new AlertDialog.Builder(MainActivity.this)
+                        .setTitle("Attention")
+                        .setMessage("Il faut indiquer le mail")
+                        .show();
             }
         }
 

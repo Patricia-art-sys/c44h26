@@ -59,24 +59,31 @@ public class MainActivity extends AppCompatActivity {
             super.onDraw(canvas);
             crayon.setColor(Color.GREEN);
             canvas.drawCircle(100,100,80,crayon);
+            //(cx, colonne du centre) (cy, ordonnéee) sont les coordonnées du centre où placer le cercle,
+            // radius pour le rayon
 
-            crayon.setStyle(Paint.Style.STROKE);
-            crayon.setStrokeWidth(5);
+            crayon.setStyle(Paint.Style.STROKE);                //définit le style de trait, stroke pour un suel trait, fill pour remplir le cercle
+            crayon.setStrokeWidth(5);                           //défini la taille du trait
             crayon.setColor(Color.YELLOW);
             canvas.drawCircle(280,100,80,crayon);
 
             crayon.setStyle(Paint.Style.FILL);
-            crayon.setColor(Color.RED);
-            canvas.drawArc(390,200,500, 300,0,120,true,crayon);
-
-            crayon.setStyle(Paint.Style.FILL);
             crayon.setColor(Color.YELLOW);
-            canvas.drawArc(390,200,500, 300,120,120,true,crayon);
+            canvas.drawArc(390,200,600, 400,0,120,true,crayon);
+            //left, top, right et bottom, définissent l'espace carrée reservée au cercle
+            //startAngle angle de départ comme dans le cercle trigo
+            //sweepAngle définit l'angle formé par l'arc de cercle, on va de 0 on ajoute 120 degrés
 
             crayon.setStyle(Paint.Style.FILL);
             crayon.setColor(Color.BLUE);
+            canvas.drawArc(390,200,600, 400,120,120,true,crayon);
+            //sweepAngle  on va de 120, position de fin précédente et on ajoute 120 degrés
 
-            canvas.drawArc(390,200,500, 300,240,120,true,crayon);
+            crayon.setStyle(Paint.Style.FILL);
+            crayon.setColor(Color.RED);
+            canvas.drawArc(390,200,600, 400,240,120,true,crayon);
+            //sweepAngle  on va de 240, position de fin précédente et on ajoute 120 degrés
+            //un cercle vaut 360, donc 3 arcs on aura des angles de 120deg pour chaque
         }
     }
 }

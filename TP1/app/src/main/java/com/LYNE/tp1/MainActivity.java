@@ -28,12 +28,16 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     ConstraintLayout parent;
     LinearLayout couleurs;
+    ChipGroup groupCouleurs;
     LinearLayout outils;
     Ecouteur ec;
     Surface s;
@@ -42,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     int color;
     int largeur = 10;
     int couleurFond = Color.parseColor("#FAF0E6");
-    String control;
+    String control = "crayon";
     Bitmap bitmap;
 
     public int getCouleurFond() {
@@ -66,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         couleurs = findViewById(R.id.couleurs);
+        groupCouleurs = findViewById(R.id.Group);
         outils = findViewById(R.id.outils);
         parent = findViewById(R.id.parent);
         listDeForme = new ArrayList<>();
@@ -76,9 +81,9 @@ public class MainActivity extends AppCompatActivity {
         s = new Surface(this);
         s.setLayoutParams(new ConstraintLayout.LayoutParams(-1, -1));
 
-        for(int i = 0; i <= couleurs.getChildCount(); i++){
-            if(couleurs.getChildAt(i) instanceof Button){
-                couleurs.getChildAt(i).setOnClickListener(ec);
+        for(int i = 0; i <= groupCouleurs.getChildCount(); i++){
+            if(groupCouleurs.getChildAt(i) instanceof Chip){
+                groupCouleurs.getChildAt(i).setOnClickListener(ec);
             }
         }
 
@@ -128,8 +133,9 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View source) {
 
-            if(source instanceof Button){
+            if(source instanceof Chip){
                 color = Color.parseColor(String.valueOf(source.getTag()));
+
 
             }else if(source instanceof ImageButton){
                 control = (String) source.getTag();
