@@ -21,4 +21,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "Annexe9"
 include(":app")
- 
