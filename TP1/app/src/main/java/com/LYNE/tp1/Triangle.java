@@ -29,10 +29,19 @@ public class Triangle extends Forme {
         crayon.setStrokeWidth(getLargeur());
         crayon.setStyle(Paint.Style.STROKE);
 
-        c.drawLine((float) (end.x - start.x) /2, start.y, end.x, end.y, crayon);
-        c.drawLine((float) (end.x - start.x) /2, start.y, end.x, end.y, crayon);
-        c.drawLine(start.x, start.y, end.x, end.y, crayon);
+        //points du triangles
+        float x1 = start.x;
+        float y1 = end.y;
 
+        float x2 = end.x;
+        float y2 = end.y;
+
+        float x3 = (float) (start.x + end.x) / 2;
+        float y3 = start.y;
+
+        c.drawLine(x1, y1, x2, y2, crayon);
+        c.drawLine(x1, y1, x3, y3, crayon);
+        c.drawLine(x2, y2, x3, y3, crayon);
 
     }
 

@@ -35,23 +35,30 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    // Layouts principaux
     ConstraintLayout parent;
     LinearLayout couleurs;
-    ChipGroup groupCouleurs;
     LinearLayout outils;
+    ChipGroup groupCouleurs;
+
+    //gestion d'évènements
     Ecouteur ec;
+
+    //surface de dessin
     Surface s;
     Point depart, arrivee;
+
+    // Dialogue pour choisir largeur du trait
     DialogLargeurTrait dialog;
-    int color;
+
+    //paramètres de dessin
+    int color = Color.WHITE;
     int largeur = 10;
     int couleurFond = Color.parseColor("#FAF0E6");
     String control = "crayon";
     Bitmap bitmap;
 
-    public int getCouleurFond() {
-        return couleurFond;
-    }
+
     public void changerLargeur(int l){ this.largeur = l;}
 
     Forme tracer;
@@ -69,10 +76,13 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+
         couleurs = findViewById(R.id.couleurs);
         groupCouleurs = findViewById(R.id.Group);
         outils = findViewById(R.id.outils);
         parent = findViewById(R.id.parent);
+
+        //Inistialisation des listes les objets
         listDeForme = new ArrayList<>();
         temp = new ArrayList<>();
         dialog = new DialogLargeurTrait(this);
@@ -81,12 +91,14 @@ public class MainActivity extends AppCompatActivity {
         s = new Surface(this);
         s.setLayoutParams(new ConstraintLayout.LayoutParams(-1, -1));
 
-        for(int i = 0; i <= groupCouleurs.getChildCount(); i++){
+        //Associer les couleurs à l'écouteur
+        for(int i = 0; i < groupCouleurs.getChildCount(); i++){
             if(groupCouleurs.getChildAt(i) instanceof Chip){
                 groupCouleurs.getChildAt(i).setOnClickListener(ec);
             }
         }
 
+        //Associer les outils à l'écouteur
         for(int i = 0; i <= outils.getChildCount(); i++){
             if(outils.getChildAt(i) instanceof ImageButton){
                 outils.getChildAt(i).setOnClickListener(ec);
@@ -98,11 +110,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // ================= SURFACE DE DESSIN =================
     private class Surface extends View {
 
         public Surface(Context context) {
             super(context);
         }
+
+        // Capture la vue en bitmap (utile pour la pipette)
         public Bitmap getBitmapImage(){
             this.buildDrawingCache();
             bitmap = Bitmap.createBitmap(this.getDrawingCache());
@@ -114,9 +129,11 @@ public class MainActivity extends AppCompatActivity {
         protected void onDraw(@NonNull Canvas canvas) {
             super.onDraw(canvas);
 
+            // Dessiner la forme en cours
             if(tracer != null)
                 tracer.dessiner(canvas);
 
+            // Dessiner toutes les formes sauvegardées
             if(listDeForme != null){
                 System.out.println(listDeForme.size());
                 for(Forme f : listDeForme){
@@ -128,35 +145,42 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+    // ================= GESTION DES ÉVÉNEMENTS =================
     private class Ecouteur implements View.OnClickListener, View.OnTouchListener{
         Bitmap img;
         @Override
         public void onClick(View source) {
 
+            //choix de couleur
             if(source instanceof Chip){
                 color = Color.parseColor(String.valueOf(source.getTag()));
-
-
-            }else if(source instanceof ImageButton){
+            }
+            //Choix d'outil
+            else if(source instanceof ImageButton){
                 control = (String) source.getTag();
                 if(control.equals("remplissage")){
+                    // Change la couleur de fond
                     couleurFond = color;
                     s.setBackgroundColor(couleurFond);
 
                 }else if(control.equals("undo")){
-                    if(listDeForme != null){
+                    // Annuler dernière forme
+                    if(!listDeForme.isEmpty()){
                        Forme last = listDeForme.remove(listDeForme.size()-1);
                        temp.add(last);
                        s.invalidate();
                        tracer = null;
                     }
                 }else if(control.equals("redo")){
-                    if(temp != null){
+                    // Restaurer une forme annulée
+                    if(temp != null && !temp.isEmpty()){
                         Forme redo = temp.remove(temp.size()-1);
                         listDeForme.add(redo);
                         s.invalidate();
                     }
                 }else if(control.equals("largeurTrait")){
+                    control = "crayon";
                     dialog.show();
                 }
             }
@@ -167,6 +191,7 @@ public class MainActivity extends AppCompatActivity {
             if(event.getAction() == MotionEvent.ACTION_DOWN){
                 depart = new Point((int)event.getX(), (int)event.getY());
 
+                //Création la forme selon l'outil
                 if(control.equals("crayon")){
                     tracer = new TraceLibre(largeur, color);
 
@@ -184,6 +209,7 @@ public class MainActivity extends AppCompatActivity {
                     tracer = new Rectangle(largeur, color);
 
                 }else if(control.equals("pipette")){
+                    // Récupérer la couleur du pixel
                     img = s.getBitmapImage();
                     int couleurChoisie = img.getPixel(depart.x, depart.y);
                     color = couleurChoisie;
@@ -192,6 +218,7 @@ public class MainActivity extends AppCompatActivity {
                     tracer = new TraceLibre(largeur, color);
                 }
 
+                // Initialisation de la forme
                 if(tracer instanceof TraceLibre) {
                     ((TraceLibre) tracer).addPointsMove(depart);
 
@@ -209,8 +236,8 @@ public class MainActivity extends AppCompatActivity {
                     ((Triangle) tracer).setEnd(depart);
 
                 }
-
-            }else if(event.getAction() == ACTION_MOVE){
+            }
+            else if(event.getAction() == ACTION_MOVE){
                 arrivee = new Point((int)event.getX(), (int)event.getY());
 
                 if(tracer instanceof TraceLibre) {
@@ -229,6 +256,7 @@ public class MainActivity extends AppCompatActivity {
                     ((Triangle) tracer).setEnd(arrivee);
                 }
 
+                //redessiner la vue
                 s.invalidate();
 
             }else if(event.getAction() == ACTION_UP){
