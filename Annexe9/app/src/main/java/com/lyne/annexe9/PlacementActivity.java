@@ -94,6 +94,12 @@ public class PlacementActivity extends AppCompatActivity {
                 champMontant.setHint("ex.: 1000");
                 champMontant.requestFocus(); //place le curseur sur le champ100
             }
+            catch (NegatifException ne){
+                creerAlertDialog(ne.getMessage());
+                champMontant.setText("");
+                champMontant.setHint("ex.: 1000");
+                champMontant.requestFocus();
+            }
             finally {
 
             }
