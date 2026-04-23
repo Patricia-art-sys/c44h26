@@ -3,9 +3,9 @@ package com.lyne.annexe13;
 public class Evaluation {
     private String nom;
     private String microbrasserie;
-    private int etoile;
+    private double etoile;
 
-    public Evaluation(String nom, String microbrasserie, int etoile) {
+    public Evaluation(String nom, String microbrasserie, double etoile) {
         this.nom = nom;
         this.microbrasserie = microbrasserie;
         this.etoile = etoile;
@@ -19,7 +19,7 @@ public class Evaluation {
         return microbrasserie;
     }
 
-    public int getEtoile() {
+    public double getEtoile() {
         return etoile;
     }
 }

@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
+
 public class GestionBD extends SQLiteOpenHelper {
     private static GestionBD instance;
     private SQLiteDatabase database;
@@ -18,7 +20,7 @@ public class GestionBD extends SQLiteOpenHelper {
     }
     public GestionBD(@Nullable Context context) {
         super(context, "annexe13", null, 1);
-        database = this.getReadableDatabase();
+        database = this.getWritableDatabase();
     }
 
 
@@ -34,17 +36,26 @@ public class GestionBD extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS evaluation");
         onCreate(db);
     }
-    public void ajouterEvaluation(Evaluation e, SQLiteDatabase db){
+    public void ajouterEvaluation(Evaluation e){
         ContentValues cv = new ContentValues();
         cv.put("nom", e.getNom());
         cv.put("microbrasserie", e.getMicrobrasserie());
         cv.put("etoile", e.getEtoile());
-        db.insert("evaluation", null, cv);
+        database.insert("evaluation", null, cv);
     }
 
-    public void retournerMeilleure(String nomBiere){
-        String[] parameters = {nomBiere};
-//        Cursor cursor = database.rawQuery();
-
+    public ArrayList<String> retournerMeilleure() throws Exception{
+        ArrayList<String> listeEvaluations = new ArrayList<>();
+        Cursor cursor = database.rawQuery("SELECT nom FROM evaluation ORDER BY etoile DESC LIMIT 3",null);
+        while (cursor.moveToNext()){
+            listeEvaluations.add(cursor.getString(0));
+            //select * => getString(1)
+            //select microbrasserie => getString(1)
+        }
+        if(listeEvaluations.size() < 3){
+            throw new Exception("Moins de 3 evaluations");
+        }
+        cursor.close();
+        return listeEvaluations;
     }
 }
