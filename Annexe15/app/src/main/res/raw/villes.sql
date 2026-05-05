@@ -1,0 +1,18 @@
+CREATE TABLE villes_quebec (id INTEGER PRIMARY KEY AUTOINCREMENT,nom TEXT NOT NULL,population INTEGER NOT NULL);
+INSERT INTO villes_quebec (nom, population) VALUES ('Montréal', 1780000);
+INSERT INTO villes_quebec (nom, population) VALUES ('Québec', 557000);
+INSERT INTO villes_quebec (nom, population) VALUES ('Laval', 443000);
+INSERT INTO villes_quebec (nom, population) VALUES ('Gatineau', 295000);
+INSERT INTO villes_quebec (nom, population) VALUES ('Longueuil', 254000);
+INSERT INTO villes_quebec (nom, population) VALUES ('Sherbrooke', 175000);
+INSERT INTO villes_quebec (nom, population) VALUES ('Lévis', 150000);
+INSERT INTO villes_quebec (nom, population) VALUES ('Saguenay', 145000);
+INSERT INTO villes_quebec (nom, population) VALUES ('Trois-Rivières', 142000);
+INSERT INTO villes_quebec (nom, population) VALUES ('Terrebonne', 120000);
+INSERT INTO villes_quebec (nom, population) VALUES ('Saint-Jean-sur-Richelieu', 100000);
+INSERT INTO villes_quebec (nom, population) VALUES ('Brossard', 90000);
+INSERT INTO villes_quebec (nom, population) VALUES ('Repentigny', 87000);
+INSERT INTO villes_quebec (nom, population) VALUES ('Drummondville', 80000);
+INSERT INTO villes_quebec (nom, population) VALUES ('Saint-Jérôme', 78000);
+INSERT INTO villes_quebec (nom, population) VALUES ('Granby', 70000);
+INSERT INTO villes_quebec (nom, population) VALUES ('Blainville', 60000);
