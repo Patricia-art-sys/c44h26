@@ -4,7 +4,7 @@ plugins {
 
 android {
     namespace = "com.lyne.annexe13"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.lyne.annexe13"

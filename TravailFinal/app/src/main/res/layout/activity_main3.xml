@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#4B4747"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.7"
+        android:fontFamily="serif"
+        android:gravity="center"
+        android:text="Mots Blitz"
+        android:textAllCaps="false"
+        android:textColor="#280202"
+        android:textSize="34sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/nomJoueur"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.6"
+        android:gravity="center"
+        android:text="TextView"
+        android:textColor="#D9CDCD"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/nbreMots"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.3"
+        android:gravity="bottom"
+        android:paddingLeft="10dp"
+        android:text="0 mots"
+        android:textColor="#D9CDCD"
+        android:textSize="20sp"
+        android:textStyle="italic" />
+
+    <ListView
+        android:id="@+id/listePointage"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3" />
+
+    <Button
+        android:id="@+id/boutonRetour"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.3"
+        android:backgroundTint="#1D0505"
+        android:text="Menu Principal"
+        android:textAllCaps="false"
+        android:textColor="#D1C2C2"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.2" />
+</LinearLayout>
